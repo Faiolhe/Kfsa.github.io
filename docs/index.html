@@ -3,21 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KFSA Gallery - Premium</title>
+<title>KFSA Gallery - Contemporary Artist</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap');
 
 :root {
-  --bg-primary: #0a0a0a;
-  --bg-secondary: #141414;
-  --bg-modal: #1a1a1a;
+  --bg-primary: #080808;
+  --bg-secondary: #111111;
+  --bg-modal: #151515;
   --text-primary: #f5f5f5;
   --text-secondary: #cccccc;
-  --text-tertiary: #888888;
-  --border-light: rgba(255, 255, 255, 0.1);
+  --text-tertiary: #777777;
+  --border-light: rgba(255, 255, 255, 0.08);
   --border-medium: rgba(255, 255, 255, 0.2);
-  --color-kf: #1346c8;
-  --color-sa: #b82020;
   --color-gold: #c5a059;
 }
 
@@ -25,16 +23,58 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background-color: var(--bg-primary);
+  /* Fundo sofisticado com gradiente radial */
+  background: radial-gradient(circle at top center, #1a1a1a 0%, var(--bg-primary) 60%);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
 }
 
-/* --- HERO SPLIT SCREEN --- */
+/* --- MENU SUPERIOR --- */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  padding: 1.5rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(8, 8, 8, 0.7);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 1px solid var(--border-light);
+  z-index: 100;
+}
+
+.nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover { color: var(--text-primary); }
+
+/* --- HERO SPLIT SCREEN APRIMORADO --- */
 .hero-split {
   position: relative;
-  height: 70vh;
-  min-height: 500px;
+  height: 90vh;
+  min-height: 600px;
   display: flex;
   overflow: hidden;
   border-bottom: 1px solid var(--border-light);
@@ -43,453 +83,470 @@ body {
 .video-half {
   flex: 1;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
 }
 
 .video-half video {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  min-width: 100%;
-  min-height: 100%;
+  min-width: 100%; min-height: 100%;
   object-fit: cover;
-  opacity: 0.4; /* Deixa o vídeo escuro para focar no texto */
-  z-index: 0;
-  transition: opacity 0.5s ease;
+  opacity: 0.25; /* Mais escuro para destacar o logo central */
+  transition: opacity 0.8s ease;
 }
 
-.video-half:hover video {
-  opacity: 0.6;
+.hero-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  text-align: center;
+  pointer-events: none; /* Deixa interagir com vídeos se necessário */
 }
 
-.hero-letter {
-  position: relative;
-  z-index: 1;
+.hero-tag {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  letter-spacing: 4px;
+  margin-bottom: 1rem;
+}
+
+.hero-logo-kfsa {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(6rem, 15vw, 15rem);
+  font-size: clamp(6rem, 15vw, 12rem);
   font-weight: 700;
   line-height: 1;
-  text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  letter-spacing: -2px;
+  
+  /* Efeito de Tinta Iluminada */
+  background: linear-gradient(45deg, #1346c8, #2f6fff, #b82020);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 20px rgba(19,70,200,0.4)) drop-shadow(0 0 30px rgba(184,32,32,0.3));
+  margin-bottom: 1rem;
 }
 
-.hero-letter.kf { color: var(--color-kf); }
-.hero-letter.sa { color: var(--color-sa); }
-
-.hero-overlay-text {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 2.5rem 2rem;
-  background: linear-gradient(to top, var(--bg-primary) 10%, transparent);
-  text-align: center;
-  z-index: 2;
-}
-
-.hero-byline {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.4rem;
-  letter-spacing: 4px;
-  color: var(--text-secondary);
-  font-style: italic;
-  margin-bottom: 0.5rem;
-}
-
-.hero-name {
-  font-size: 0.75rem;
+.hero-sub {
+  font-size: 0.8rem;
   letter-spacing: 6px;
   text-transform: uppercase;
   color: var(--text-tertiary);
 }
 
-/* --- LAYOUT PRINCIPAL --- */
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 3rem 2rem;
-}
-
-/* --- FILTROS EDITORIAIS --- */
-.filter-section {
+/* --- ESTATÍSTICAS --- */
+.artist-stats {
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  margin-bottom: 3rem;
+  justify-content: center;
+  gap: clamp(2rem, 6vw, 6rem);
+  padding: 4rem 2rem;
   border-bottom: 1px solid var(--border-light);
-  padding-bottom: 2rem;
+  background: rgba(0,0,0,0.3);
 }
 
-.search-bar {
-  width: 100%;
-  max-width: 400px;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--border-medium);
-  color: var(--text-primary);
-  font-size: 0.9rem;
-  padding: 0.8rem 0;
-  font-family: 'Inter', sans-serif;
-  outline: none;
-  transition: border-color 0.3s;
+.stat-item { text-align: center; }
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  color: var(--color-gold);
+  line-height: 1;
+  margin-bottom: 0.5rem;
 }
-
-.search-bar:focus { border-color: var(--text-primary); }
-
-.filter-group {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.filter-label {
-  font-size: 0.7rem;
+.stat-label {
+  font-size: 0.65rem;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--text-tertiary);
 }
 
+/* --- SESSÃO SOBRE O ARTISTA --- */
+.about-section {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 6rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.about-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/5;
+  padding: 15px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+}
+
+.about-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(30%) contrast(1.1);
+}
+
+.about-text h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+
+.about-text p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.about-signature {
+  margin-top: 3rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: var(--text-primary);
+  opacity: 0.8;
+}
+
+/* --- LAYOUT PRINCIPAL (GALERIA) --- */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 6rem 2rem;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+/* --- FILTROS POR SÉRIES --- */
+.filter-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.search-bar {
+  width: 100%;
+  max-width: 500px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  font-size: 1rem;
+  padding: 0.8rem 0;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  text-align: center;
+  transition: border-color 0.3s;
+}
+.search-bar:focus { border-color: var(--color-gold); }
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
 .filter-btn {
   background: transparent;
-  border: 1px solid var(--border-light);
+  border: none;
   color: var(--text-secondary);
-  padding: 0.5rem 1.2rem;
-  border-radius: 2px;
-  font-size: 0.75rem;
-  letter-spacing: 1px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
   text-transform: uppercase;
   cursor: pointer;
+  position: relative;
+  padding-bottom: 5px;
   transition: all 0.3s ease;
 }
 
-.filter-btn:hover { border-color: var(--text-primary); color: var(--text-primary); }
-.filter-btn.active {
+.filter-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%;
+  width: 0; height: 1px;
   background: var(--text-primary);
-  color: var(--bg-primary);
-  border-color: var(--text-primary);
+  transition: width 0.3s ease, left 0.3s ease;
 }
 
-/* --- GALLERY GRID --- */
+.filter-btn:hover { color: var(--text-primary); }
+.filter-btn.active { color: var(--text-primary); }
+.filter-btn.active::after { width: 100%; left: 0; }
+
+/* --- GALLERY GRID & CARDS --- */
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 2.5rem 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 4rem 2.5rem;
 }
 
-.no-results {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 4rem;
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: 1.5rem;
-  color: var(--text-tertiary);
-}
-
-/* --- CARDS DAS OBRAS --- */
 .art-card {
-  background: transparent;
+  position: relative;
   cursor: pointer;
-  group: art;
+  text-decoration: none;
+  display: block;
+  /* Configuração para o efeito de luz do mouse */
+  background: rgba(17, 17, 17, 0.4);
+  border: 1px solid var(--border-light);
+  padding: 15px; /* Moldura Virtual */
+  transition: transform 0.4s ease;
 }
+
+.art-card:hover { transform: translateY(-5px); }
+
+/* Efeito de luz seguindo o mouse (Glassmorphism Glow) */
+.art-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.08), transparent 40%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  z-index: 1;
+}
+.art-card:hover::before { opacity: 1; }
 
 .card-img-wrap {
   position: relative;
   width: 100%;
   aspect-ratio: 4/5;
   overflow: hidden;
-  margin-bottom: 1.2rem;
-  background: var(--bg-secondary);
+  background: #050505;
+  z-index: 2;
 }
 
 .card-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s ease;
+  transition: transform 1s ease;
 }
-
-.art-card:hover .card-img { transform: scale(1.04); }
-
-.status-badge {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  padding: 4px 10px;
-  font-size: 0.65rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  background: rgba(0,0,0,0.7);
-  backdrop-filter: blur(4px);
-  border: 1px solid var(--border-light);
-  z-index: 2;
-}
-
-.status-badge.venda { color: #fff; border-color: var(--color-kf); }
-.status-badge.vendido { color: var(--text-tertiary); }
+.art-card:hover .card-img { transform: scale(1.05); }
 
 .card-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+  position: relative;
+  z-index: 2;
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.card-series {
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 0.5rem;
 }
 
 .card-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 400;
   color: var(--text-primary);
+  margin-bottom: 0.2rem;
 }
 
 .card-tech {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: var(--text-tertiary);
-  letter-spacing: 0.5px;
 }
 
 .card-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border-light);
+  margin-top: 1.2rem;
+  gap: 1rem;
 }
 
 .card-price {
   font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 0.9rem;
   color: var(--color-gold);
 }
 
-.btn-buy {
-  background: transparent;
-  border: 1px solid var(--border-medium);
-  color: var(--text-primary);
-  padding: 0.5rem 1.2rem;
-  font-size: 0.7rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.btn-buy:hover:not(.disabled) {
-  background: var(--text-primary);
-  color: var(--bg-primary);
-}
-
-.btn-buy.disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  border-color: transparent;
-}
-
-/* --- MODAL CHIQUE (RESOLVIDO A TRANSPARÊNCIA) --- */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(5px);
-  z-index: 999;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.modal-overlay.open {
-  display: flex;
-  opacity: 1;
-}
-
-.modal-content {
-  background: var(--bg-modal); /* Fundo Sólido */
-  border: 1px solid var(--border-light);
-  width: 100%;
-  max-width: 1000px;
-  max-height: 90vh;
-  display: flex;
-  flex-direction: row;
-  position: relative;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-  overflow-y: auto;
-}
-
-.modal-close {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: transparent;
-  border: none;
-  color: var(--text-primary);
-  font-size: 1.5rem;
-  cursor: pointer;
-  z-index: 10;
-  width: 35px;
-  height: 35px;
+.status-dot {
+  width: 6px; height: 6px;
   border-radius: 50%;
-  background: rgba(0,0,0,0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
 }
+.status-dot.venda { background: #28a745; box-shadow: 0 0 8px #28a745; }
+.status-dot.vendido { background: #dc3545; }
 
-.modal-left {
-  flex: 1;
-  background: #000;
-  position: relative;
-  min-height: 400px;
+/* --- MODAL --- */
+/* Mantido a essência premium anterior */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  z-index: 999;
+  align-items: center; justify-content: center;
+  padding: 2rem; opacity: 0; transition: opacity 0.3s ease;
 }
-
-.modal-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.modal-overlay.open { display: flex; opacity: 1; }
+.modal-content {
+  background: var(--bg-modal); border: 1px solid var(--border-light);
+  width: 100%; max-width: 1100px; max-height: 90vh;
+  display: flex; flex-direction: row; position: relative;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.8); overflow-y: auto;
 }
-
-.modal-right {
-  flex: 1;
-  padding: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.modal-close {
+  position: absolute; top: 20px; right: 20px;
+  background: rgba(0,0,0,0.5); border: 1px solid var(--border-light);
+  color: #fff; font-size: 1.2rem; cursor: pointer;
+  z-index: 10; width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.3s;
 }
+.modal-close:hover { background: #fff; color: #000; }
+.modal-left { flex: 1; background: #000; padding: 20px; display: flex; align-items: center;}
+.modal-img { width: 100%; max-height: 80vh; object-fit: contain; }
+.modal-right { flex: 1; padding: 4rem; display: flex; flex-direction: column; justify-content: center; }
 
-.m-title { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 400; margin-bottom: 0.5rem; line-height: 1.1; }
+.m-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 0.5rem; }
 .m-tech { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-tertiary); margin-bottom: 2rem; }
-.m-desc { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6;}
+.m-desc { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-style: italic; color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6;}
 .m-hist { font-size: 0.9rem; color: var(--text-tertiary); line-height: 1.7; margin-bottom: 2.5rem; }
-
-.m-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.2rem;
-  margin-bottom: 2.5rem;
-  padding-bottom: 2.5rem;
-  border-bottom: 1px solid var(--border-light);
-}
-
+.m-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border-light); }
 .m-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-tertiary); }
-.m-value { font-size: 0.9rem; margin-top: 3px; }
-
-.m-action {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.m-price { font-size: 1.6rem; color: var(--color-gold); font-family: 'Cormorant Garamond', serif; }
-
+.m-value { font-size: 0.95rem; margin-top: 5px; color: #fff;}
+.m-action { display: flex; align-items: center; justify-content: space-between; }
+.m-price { font-size: 1.8rem; color: var(--color-gold); font-family: 'Cormorant Garamond', serif; }
 .btn-buy-large {
-  background: var(--text-primary);
-  color: var(--bg-primary);
-  border: none;
-  padding: 1rem 2rem;
-  font-size: 0.8rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  font-weight: 500;
-  cursor: pointer;
-  text-decoration: none;
-  transition: transform 0.2s;
+  background: #fff; color: #000; border: none; padding: 1rem 2.5rem;
+  font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 600;
+  cursor: pointer; text-decoration: none; transition: transform 0.2s;
 }
-
 .btn-buy-large:hover { transform: translateY(-2px); }
-.btn-buy-large.disabled {
-  background: var(--bg-secondary);
-  color: var(--text-tertiary);
-  cursor: not-allowed;
-  transform: none;
-}
+.btn-buy-large.disabled { background: #222; color: #555; cursor: not-allowed; transform: none; }
 
-/* Responsividade do Modal e Grid */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+  .about-section { grid-template-columns: 1fr; gap: 2rem; }
   .modal-content { flex-direction: column; }
-  .modal-left { min-height: 300px; }
   .modal-right { padding: 2rem; }
-  .m-title { font-size: 1.8rem; }
-  .hero-split { flex-direction: column; height: 100vh; }
-  .video-half { width: 100%; height: 50%; }
+  .navbar { padding: 1.5rem; flex-direction: column; gap: 1rem; }
+  .hero-logo-kfsa { font-size: 5rem; }
+  .artist-stats { flex-wrap: wrap; }
 }
 </style>
 </head>
 <body>
 
-<!-- HERO COM VÍDEOS DIVIDIDOS -->
-<div class="hero-split">
+<!-- MENU SUPERIOR -->
+<header class="navbar">
+  <a href="#" class="nav-brand">KFSA</a>
+  <nav class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#about">O Artista</a>
+    <a href="#portfolio">Acervo</a>
+    <a href="#contact">Contato</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section id="home" class="hero-split">
   <div class="video-half">
-    <!-- Substitua o src pelos seus vídeos reais -->
     <video src="./faiolhebra_2.mp4" autoplay loop muted playsinline></video>
-    <div class="hero-letter kf">KF</div>
   </div>
   <div class="video-half">
-    <video src="./faiolhebra_hd.mp4" autoplay loop muted playsinline></video>
-    <div class="hero-letter sa">SA</div>
+    <video src="faiolhebra_hd.mp4" autoplay loop muted playsinline></video>
   </div>
   
-  <div class="hero-overlay-text">
-    <div class="hero-byline">Arte digital, emoção e contraste</div>
-    <div class="hero-name">Kayque Faiolhe da Silva Alves</div>
+  <div class="hero-content">
+    <div class="hero-tag">Contemporary Digital Artist</div>
+    <div class="hero-logo-kfsa">KFSA</div>
+    <div class="hero-sub">Obras Originais • Arte Digital • Coleções Exclusivas</div>
   </div>
-</div>
+</section>
 
-<div class="container">
+<!-- ESTATÍSTICAS -->
+<section class="artist-stats">
+  <div class="stat-item">
+    <div class="stat-num">47</div>
+    <div class="stat-label">Obras de Arte</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">05</div>
+    <div class="stat-label">Coleções</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">03</div>
+    <div class="stat-label">Anos de Produção</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">02</div>
+    <div class="stat-label">Livros Publicados</div>
+  </div>
+</section>
+
+<!-- SOBRE O ARTISTA -->
+<section id="about" class="about-section">
+  <div class="about-video">
+    <!-- Substitua pelo vídeo do artista trabalhando -->
+    <video src="https://videos.pexels.com/video-files/5377684/5377684-hd_1920_1080_25fps.mp4" autoplay loop muted playsinline></video>
+  </div>
+  <div class="about-text">
+    <h2>A mente por trás do contraste.</h2>
+    <p>Kayque Faiolhe da Silva Alves explora as fronteiras entre o vazio e a forma. Sua arte digital nasce de uma obsessão pelo espaço negativo e pela emoção contida no silêncio.</p>
+    <p>Através de uma técnica que mescla geometria brutalista e sensibilidade orgânica, suas séries propõem uma pausa visual no caos contemporâneo.</p>
+    <div class="about-signature">Kayque Faiolhe</div>
+  </div>
+</section>
+
+<!-- GALERIA / ACERVO -->
+<section id="portfolio" class="container">
+  <h2 class="section-title">Acervo & Coleções</h2>
   
-  <!-- FILTROS EDITORIAIS -->
+  <!-- FILTROS POR SÉRIES (Mais profissional que "quadros/desenhos") -->
   <div class="filter-section">
-    <input type="text" class="search-bar" id="searchInp" placeholder="Buscar por título, técnica, série..." oninput="applyFilters()">
+    <div class="filter-group" id="serie-filters">
+      <button class="filter-btn active" onclick="setFilter('serie', 'todas', this)">Todas as Obras</button>
+      <button class="filter-btn" onclick="setFilter('serie', 'Silences', this)">Silences</button>
+      <button class="filter-btn" onclick="setFilter('serie', 'Urban Feelings', this)">Urban Feelings</button>
+      <button class="filter-btn" onclick="setFilter('serie', 'Deconstruct', this)">Deconstruct</button>
+      <button class="filter-btn" onclick="setFilter('serie', 'Editorial', this)">Editorial</button>
+    </div>
     
-    <div class="filter-group" id="cat-filters">
-      <span class="filter-label">Acervo</span>
-      <button class="filter-btn active" onclick="setFilter('cat', 'todas', this)">Tudo</button>
-      <button class="filter-btn" onclick="setFilter('cat', 'quadros', this)">Quadros</button>
-      <button class="filter-btn" onclick="setFilter('cat', 'desenhos', this)">Desenhos</button>
-      <button class="filter-btn" onclick="setFilter('cat', 'livros', this)">Livros</button>
-    </div>
-
-    <div class="filter-group" id="status-filters">
-      <span class="filter-label">Disponibilidade</span>
-      <button class="filter-btn active" onclick="setFilter('status', 'todos', this)">Todos</button>
-      <button class="filter-btn" onclick="setFilter('status', 'venda', this)">Disponível</button>
-      <button class="filter-btn" onclick="setFilter('status', 'vendido', this)">Coleção Privada</button>
-    </div>
+    <input type="text" class="search-bar" id="searchInp" placeholder="Pesquisar por título ou técnica..." oninput="applyFilters()">
   </div>
 
-  <!-- GALERIA -->
   <div class="gallery" id="gallery"></div>
-  <div class="no-results" id="noRes" style="display:none;">Nenhuma obra encontrada. O silêncio também é arte.</div>
+</section>
 
-</div>
-
-<!-- MODAL PREMIUM -->
+<!-- MODAL DE OBRA -->
 <div class="modal-overlay" id="modalScene" onclick="closeModal(event)">
   <div class="modal-content" id="modalBody" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="closeModal(event)" aria-label="Fechar">✕</button>
-    
-    <div class="modal-left">
-      <img src="" alt="Obra" class="modal-img" id="mPhoto">
-    </div>
+    <div class="modal-left"><img src="" alt="Obra" class="modal-img" id="mPhoto"></div>
     
     <div class="modal-right">
       <h2 class="m-title" id="mTitle"></h2>
       <div class="m-tech" id="mTech"></div>
-      
       <div class="m-desc" id="mDesc"></div>
       <div class="m-hist" id="mHist"></div>
       
       <div class="m-grid">
         <div><div class="m-label">Ano</div><div class="m-value" id="mAno"></div></div>
         <div><div class="m-label">Dimensões</div><div class="m-value" id="mDim"></div></div>
-        <div><div class="m-label">Série</div><div class="m-value" id="mSerie"></div></div>
-        <div><div class="m-label">Status</div><div class="m-value" id="mStatus"></div></div>
+        <div><div class="m-label">Série / Catálogo</div><div class="m-value" id="mSerie"></div></div>
+        <div><div class="m-label">Disponibilidade</div><div class="m-value" id="mStatus"></div></div>
       </div>
       
       <div class="m-action">
@@ -501,55 +558,54 @@ body {
 </div>
 
 <script>
-// Base de dados das obras incluindo Preço e Link de compra
+// BASE DE DADOS ATUALIZADA (Focada em Séries e Numeração de Catálogo)
 const obras = [
   {
-    titulo: "Silent Geometry", cat: "quadros",
+    titulo: "Silent Geometry", serie: "Silences", catNum: "#01",
     foto: "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?q=80&w=1200",
-    ano: "2024", tecnica: "Óleo sobre tela", dim: "90 × 120 cm", serie: "Silences", 
+    ano: "2024", tecnica: "Óleo sobre tela digital", dim: "90 × 120 cm",
     status: "vendido", preco: "R$ 4.500", link: "#",
     desc: "Formas geométricas dialogam com o silêncio.",
-    hist: "Criada durante um período de introspecção, Silent Geometry nasceu da obsessão do artista com o espaço negativo — o que não é pintado tem tanto peso quanto o que é."
+    hist: "Criada durante um período de introspecção, nasceu da obsessão com o espaço negativo — o que não é pintado tem tanto peso quanto o que é."
   },
   {
-    titulo: "Urban Echo", cat: "quadros",
+    titulo: "Urban Echo", serie: "Urban Feelings", catNum: "#04",
     foto: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=1200",
-    ano: "2023", tecnica: "Acrílica sobre madeira", dim: "80 × 100 cm", serie: "Urban Feelings", 
-    status: "venda", preco: "R$ 3.200", link: "#comprar-urban-echo",
+    ano: "2023", tecnica: "Acrílica digital sobre madeira", dim: "80 × 100 cm", 
+    status: "venda", preco: "R$ 3.200", link: "#",
     desc: "O isolamento nas grandes cidades.",
-    hist: "Surgiu após três semanas andando pela cidade às 3h da manhã. O artista queria capturar o paradoxo de se sentir só em meio a milhões de pessoas."
+    hist: "Surgiu após três semanas andando pela cidade às 3h da manhã. O artista capturou o paradoxo de se sentir só em meio a milhões."
   },
   {
-    titulo: "White Emotion", cat: "quadros",
+    titulo: "White Emotion", serie: "Silences", catNum: "#02",
     foto: "https://images.unsplash.com/photo-1536924940846-227afb31e2a5?q=80&w=1200",
-    ano: "2024", tecnica: "Aquarela sobre papel", dim: "60 × 80 cm", serie: "Whiteness", 
-    status: "venda", preco: "R$ 2.800", link: "#comprar-white-emotion",
+    ano: "2024", tecnica: "Aquarela digital", dim: "60 × 80 cm",
+    status: "venda", preco: "R$ 2.800", link: "#",
     desc: "Contraste minimalista como linguagem emocional.",
-    hist: "A obra explora o branco não como ausência, mas como presença máxima. Pintada em uma única sessão de seis horas."
+    hist: "Explora o branco não como ausência, mas como presença máxima. Pintada em uma única sessão de seis horas."
   },
   {
-    titulo: "Fragments", cat: "desenhos",
+    titulo: "Fragments", serie: "Deconstruct", catNum: "#01",
     foto: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=1200",
-    ano: "2025", tecnica: "Grafite e nanquim", dim: "42 × 59 cm", serie: "Deconstruct", 
-    status: "venda", preco: "R$ 1.500", link: "#comprar-fragments",
+    ano: "2025", tecnica: "Vetor e Nanquim digital", dim: "42 × 59 cm",
+    status: "venda", preco: "R$ 1.500", link: "#",
     desc: "Descontinuidade, identidade e memória.",
-    hist: "Primeiro trabalho da série Deconstruct, onde o artista rompe formas inteiras em fragmentos. Cada pedaço carrega uma memória visual independente."
+    hist: "Primeiro trabalho onde o artista rompe formas inteiras em fragmentos. Cada pedaço carrega uma memória visual independente."
   },
   {
-    titulo: "Silêncio Editado", cat: "livros",
+    titulo: "Silêncio Editado", serie: "Editorial", catNum: "Vol 1",
     foto: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1200",
-    ano: "2023", tecnica: "Impressão offset · Capa dura", dim: "24 × 30 cm · 120p", serie: "Ed. limitada", 
+    ano: "2023", tecnica: "Impressão offset · Capa dura", dim: "24 × 30 cm",
     status: "vendido", preco: "R$ 350", link: "#",
     desc: "120 páginas do processo criativo.",
-    hist: "O primeiro livro do artista reuniu três anos de obra que existia apenas em ateliê. Esgotou em 48 horas após o lançamento oficial."
+    hist: "Primeiro livro do artista reunindo três anos de obra. Esgotou em 48 horas após o lançamento oficial."
   }
 ];
 
-let state = { cat: 'todas', status: 'todos', search: '' };
+let state = { serie: 'todas', search: '' };
 
 function setFilter(type, value, btnElement) {
   state[type] = value;
-  // Atualiza botões
   const container = btnElement.parentElement;
   container.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
   btnElement.classList.add('active');
@@ -560,13 +616,11 @@ function applyFilters() {
   state.search = document.getElementById('searchInp').value.toLowerCase().trim();
   
   const filtradas = obras.filter(o => {
-    const matchCat = state.cat === 'todas' || o.cat === state.cat;
-    const matchStatus = state.status === 'todos' || o.status === state.status;
+    const matchSerie = state.serie === 'todas' || o.serie === state.serie;
     const matchSearch = !state.search || 
                         o.titulo.toLowerCase().includes(state.search) || 
-                        o.tecnica.toLowerCase().includes(state.search) ||
-                        o.serie.toLowerCase().includes(state.search);
-    return matchCat && matchStatus && matchSearch;
+                        o.tecnica.toLowerCase().includes(state.search);
+    return matchSerie && matchSearch;
   });
 
   renderGallery(filtradas);
@@ -574,40 +628,48 @@ function applyFilters() {
 
 function renderGallery(lista) {
   const g = document.getElementById('gallery');
-  const noRes = document.getElementById('noRes');
   
   if (!lista.length) {
-    g.innerHTML = '';
-    noRes.style.display = 'block';
+    g.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 4rem; font-family: Cormorant Garamond; font-size: 1.5rem; color:#777; font-style:italic;">Nenhuma obra encontrada. O silêncio também é arte.</div>';
     return;
   }
   
-  noRes.style.display = 'none';
   g.innerHTML = lista.map((o) => {
-    const objIndex = obras.indexOf(o); // Pega o index real para o modal
+    const objIndex = obras.indexOf(o);
     const isVenda = o.status === 'venda';
-    const statusText = isVenda ? 'Disponível' : 'Vendido';
-    const btnText = isVenda ? 'Comprar' : 'Esgotado';
-    const btnClass = isVenda ? '' : 'disabled';
-    const btnLink = isVenda ? `href="${o.link}" target="_blank"` : `href="javascript:void(0)"`;
-
+    
     return `
       <div class="art-card" onclick="openModal(${objIndex})">
         <div class="card-img-wrap">
-          <div class="status-badge ${o.status}">${statusText}</div>
           <img src="${o.foto}" class="card-img" alt="${o.titulo}" loading="lazy">
         </div>
         <div class="card-info">
+          <div class="card-series">${o.serie} ${o.catNum} · ${o.ano}</div>
           <h3 class="card-title">${o.titulo}</h3>
-          <p class="card-tech">${o.ano} · ${o.tecnica}</p>
+          <p class="card-tech">${o.tecnica}</p>
           <div class="card-footer">
-            <span class="card-price">${o.preco}</span>
-            <a ${btnLink} class="btn-buy ${btnClass}" onclick="event.stopPropagation()">${btnText}</a>
+            <span class="status-dot ${o.status}" title="${isVenda ? 'Disponível' : 'Vendido'}"></span>
+            <span class="card-price">${isVenda ? o.preco : 'Coleção Privada'}</span>
           </div>
         </div>
       </div>
     `;
   }).join('');
+
+  attachGlowEffect();
+}
+
+// Lógica para a Luz seguindo o mouse nos cards
+function attachGlowEffect() {
+  document.querySelectorAll('.art-card').forEach(card => {
+    card.onmousemove = e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    };
+  });
 }
 
 function openModal(index) {
@@ -616,14 +678,14 @@ function openModal(index) {
   
   document.getElementById('mPhoto').src = o.foto;
   document.getElementById('mTitle').textContent = o.titulo;
-  document.getElementById('mTech').textContent = o.tecnica;
+  document.getElementById('mTech').textContent = `${o.ano} · ${o.tecnica}`;
   document.getElementById('mDesc').textContent = `"${o.desc}"`;
   document.getElementById('mHist').textContent = o.hist;
   document.getElementById('mAno').textContent = o.ano;
   document.getElementById('mDim').textContent = o.dim;
-  document.getElementById('mSerie').textContent = o.serie;
+  document.getElementById('mSerie').textContent = `${o.serie} ${o.catNum}`;
   document.getElementById('mStatus').textContent = isVenda ? 'Disponível' : 'Coleção Privada';
-  document.getElementById('mPrice').textContent = o.preco;
+  document.getElementById('mPrice').textContent = isVenda ? o.preco : '-';
   
   const btn = document.getElementById('mBuyBtn');
   if (isVenda) {
@@ -637,7 +699,7 @@ function openModal(index) {
   }
 
   document.getElementById('modalScene').classList.add('open');
-  document.body.style.overflow = 'hidden'; // Evita scroll atrás do modal
+  document.body.style.overflow = 'hidden';
 }
 
 function closeModal(e) {
@@ -646,9 +708,18 @@ function closeModal(e) {
   document.body.style.overflow = 'auto';
 }
 
-// Fechar com ESC
-document.addEventListener('keydown', e => {
-  if(e.key === 'Escape') closeModal();
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+
+// Smooth scroll do menu
+document.querySelectorAll('.nav-links a').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('href').substring(1);
+    const targetEl = document.getElementById(targetId);
+    if(targetEl) {
+      window.scrollTo({ top: targetEl.offsetTop - 80, behavior: 'smooth' });
+    }
+  });
 });
 
 // Inicialização

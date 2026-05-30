@@ -23,7 +23,6 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  /* Fundo sofisticado com gradiente radial */
   background: radial-gradient(circle at top center, #1a1a1a 0%, var(--bg-primary) 60%);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
@@ -70,7 +69,7 @@ body {
 
 .nav-links a:hover { color: var(--text-primary); }
 
-/* --- HERO SPLIT SCREEN APRIMORADO --- */
+/* --- HERO SPLIT SCREEN --- */
 .hero-split {
   position: relative;
   height: 90vh;
@@ -92,8 +91,14 @@ body {
   transform: translate(-50%, -50%);
   min-width: 100%; min-height: 100%;
   object-fit: cover;
-  opacity: 0.25; /* Mais escuro para destacar o logo central */
+  opacity: 0.25;
   transition: opacity 0.8s ease;
+}
+
+/* Mobile: oculta o segundo vídeo, o primeiro ocupa tela inteira */
+@media (max-width: 768px) {
+  .video-half:last-of-type { display: none; }
+  .video-half:first-of-type { flex: 1 1 100%; }
 }
 
 .hero-content {
@@ -105,7 +110,7 @@ body {
   justify-content: center;
   z-index: 2;
   text-align: center;
-  pointer-events: none; /* Deixa interagir com vídeos se necessário */
+  pointer-events: none;
 }
 
 .hero-tag {
@@ -117,18 +122,14 @@ body {
   margin-bottom: 1rem;
 }
 
+/* KFSA central: igual ao cabeçalho — preto e branco, sem gradiente */
 .hero-logo-kfsa {
   font-family: 'Playfair Display', serif;
   font-size: clamp(6rem, 15vw, 12rem);
   font-weight: 700;
   line-height: 1;
   letter-spacing: -2px;
-  
-  /* Efeito de Tinta Iluminada */
-  background: linear-gradient(45deg, #1346c8, #2f6fff, #b82020);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 20px rgba(19,70,200,0.4)) drop-shadow(0 0 30px rgba(184,32,32,0.3));
+  color: var(--text-primary);
   margin-bottom: 1rem;
 }
 
@@ -164,55 +165,154 @@ body {
   color: var(--text-tertiary);
 }
 
-/* --- SESSÃO SOBRE O ARTISTA --- */
+/* --- SESSÃO SOBRE O ARTISTA (REDESENHADA) --- */
 .about-section {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 6rem 2rem;
+  padding: 8rem 2rem;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
+  grid-template-columns: 5fr 7fr;
+  gap: 6rem;
+  align-items: start;
   border-bottom: 1px solid var(--border-light);
 }
 
-.about-video {
+/* Foto do artista com efeito de moldura */
+.about-photo-wrap {
+  position: relative;
+}
+
+.about-photo-frame {
   position: relative;
   width: 100%;
-  aspect-ratio: 4/5;
-  padding: 15px;
+  padding: 12px;
   background: var(--bg-secondary);
   border: 1px solid var(--border-light);
 }
 
-.about-video video {
+/* Detalhe decorativo no canto */
+.about-photo-frame::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: -1px;
+  width: 60px; height: 60px;
+  border-top: 2px solid var(--color-gold);
+  border-left: 2px solid var(--color-gold);
+  z-index: 2;
+}
+.about-photo-frame::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; right: -1px;
+  width: 60px; height: 60px;
+  border-bottom: 2px solid var(--color-gold);
+  border-right: 2px solid var(--color-gold);
+  z-index: 2;
+}
+
+.about-photo-frame img {
   width: 100%;
-  height: 100%;
+  display: block;
+  filter: grayscale(20%) contrast(1.05);
   object-fit: cover;
-  filter: grayscale(30%) contrast(1.1);
+}
+
+/* Etiqueta flutuante sob a foto */
+.about-photo-label {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.about-photo-label .label-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+}
+.about-photo-label .label-role {
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+/* Coluna de texto */
+.about-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.about-eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: 1.5rem;
 }
 
 .about-text h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 3rem;
-  margin-bottom: 1.5rem;
-  line-height: 1.1;
-}
-
-.about-text p {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.3rem;
-  line-height: 1.8;
-  color: var(--text-secondary);
-  margin-bottom: 1.5rem;
-}
-
-.about-signature {
-  margin-top: 3rem;
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  line-height: 1.15;
+  margin-bottom: 2.5rem;
   color: var(--text-primary);
-  opacity: 0.8;
+}
+
+.about-text h2 em {
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+/* Parágrafos do bio */
+.about-bio {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  border-left: 1px solid var(--border-light);
+  padding-left: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.about-bio p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  line-height: 1.85;
+  color: var(--text-secondary);
+}
+
+/* Frase de destaque */
+.about-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-style: italic;
+  color: var(--text-primary);
+  line-height: 1.4;
+  padding: 2rem 0;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 2.5rem;
+}
+
+/* Tags de atuação */
+.about-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.about-tag {
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  border: 1px solid var(--border-light);
+  padding: 0.4rem 0.9rem;
+  transition: border-color 0.3s, color 0.3s;
+}
+.about-tag:hover {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
 }
 
 /* --- LAYOUT PRINCIPAL (GALERIA) --- */
@@ -301,16 +401,14 @@ body {
   cursor: pointer;
   text-decoration: none;
   display: block;
-  /* Configuração para o efeito de luz do mouse */
   background: rgba(17, 17, 17, 0.4);
   border: 1px solid var(--border-light);
-  padding: 15px; /* Moldura Virtual */
+  padding: 15px;
   transition: transform 0.4s ease;
 }
 
 .art-card:hover { transform: translateY(-5px); }
 
-/* Efeito de luz seguindo o mouse (Glassmorphism Glow) */
 .art-card::before {
   content: '';
   position: absolute;
@@ -391,7 +489,6 @@ body {
 .status-dot.vendido { background: #dc3545; }
 
 /* --- MODAL --- */
-/* Mantido a essência premium anterior */
 .modal-overlay {
   display: none; position: fixed; inset: 0;
   background: rgba(0, 0, 0, 0.9);
@@ -405,7 +502,7 @@ body {
   background: var(--bg-modal); border: 1px solid var(--border-light);
   width: 100%; max-width: 1100px; max-height: 90vh;
   display: flex; flex-direction: row; position: relative;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.8); overflow-y: auto;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.8); overflow: hidden;
 }
 .modal-close {
   position: absolute; top: 20px; right: 20px;
@@ -416,9 +513,20 @@ body {
   transition: background 0.3s;
 }
 .modal-close:hover { background: #fff; color: #000; }
-.modal-left { flex: 1; background: #000; padding: 20px; display: flex; align-items: center;}
-.modal-img { width: 100%; max-height: 80vh; object-fit: contain; }
-.modal-right { flex: 1; padding: 4rem; display: flex; flex-direction: column; justify-content: center; }
+.modal-left {
+  flex: 1; background: #000; padding: 20px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.modal-img {
+  width: 100%; max-height: 80vh;
+  object-fit: contain; display: block;
+}
+.modal-right {
+  flex: 1; padding: 4rem;
+  display: flex; flex-direction: column; justify-content: center;
+  overflow-y: auto;
+}
 
 .m-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 0.5rem; }
 .m-tech { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-tertiary); margin-bottom: 2rem; }
@@ -427,7 +535,7 @@ body {
 .m-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border-light); }
 .m-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-tertiary); }
 .m-value { font-size: 0.95rem; margin-top: 5px; color: #fff;}
-.m-action { display: flex; align-items: center; justify-content: space-between; }
+.m-action { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
 .m-price { font-size: 1.8rem; color: var(--color-gold); font-family: 'Cormorant Garamond', serif; }
 .btn-buy-large {
   background: #fff; color: #000; border: none; padding: 1rem 2.5rem;
@@ -437,13 +545,109 @@ body {
 .btn-buy-large:hover { transform: translateY(-2px); }
 .btn-buy-large.disabled { background: #222; color: #555; cursor: not-allowed; transform: none; }
 
+/* Modal mobile */
+@media (max-width: 768px) {
+  .modal-overlay { padding: 0; align-items: flex-end; }
+  .modal-content {
+    flex-direction: column;
+    max-height: 95vh;
+    border-radius: 16px 16px 0 0;
+    overflow-y: auto;
+  }
+  .modal-left {
+    max-height: 40vh;
+    padding: 12px;
+  }
+  .modal-img { max-height: 38vh; }
+  .modal-right {
+    padding: 1.5rem;
+    overflow-y: visible;
+  }
+  .m-title { font-size: 1.6rem; }
+  .m-hist { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  .m-hist.expanded { display: block; }
+  .m-expand-btn {
+    background: none; border: none; color: var(--color-gold);
+    font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase;
+    cursor: pointer; padding: 0; margin-top: -1.5rem; margin-bottom: 2rem;
+    display: none;
+  }
+}
+@media (min-width: 769px) { .m-expand-btn { display: none !important; } }
+
+@media (max-width: 1000px) {
+  .about-section { grid-template-columns: 1fr; gap: 3rem; }
+  .about-photo-wrap { max-width: 380px; }
+}
+
 @media (max-width: 900px) {
-  .about-section { grid-template-columns: 1fr; gap: 2rem; }
-  .modal-content { flex-direction: column; }
-  .modal-right { padding: 2rem; }
   .navbar { padding: 1.5rem; flex-direction: column; gap: 1rem; }
   .hero-logo-kfsa { font-size: 5rem; }
   .artist-stats { flex-wrap: wrap; }
+}
+
+/* --- CONTATO & RODAPÉ --- */
+#contact { border-top: 1px solid var(--border-light); }
+
+.contact-wrap { max-width: 1400px; margin: 0 auto; }
+
+.contact-inner { padding: 8rem 2rem 6rem; max-width: 680px; }
+
+.contact-eyebrow {
+  font-size: 0.65rem; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--color-gold); margin-bottom: 1.5rem;
+}
+
+.contact-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.15; margin-bottom: 1.5rem;
+}
+.contact-title em { font-style: italic; color: var(--text-secondary); }
+
+.contact-sub {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+  color: var(--text-secondary); line-height: 1.7; margin-bottom: 3rem;
+}
+
+.contact-links {
+  display: flex; flex-direction: column; gap: 0;
+  border-top: 1px solid var(--border-light);
+}
+
+.contact-link {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.4rem 0; border-bottom: 1px solid var(--border-light);
+  text-decoration: none; transition: padding-left 0.3s ease;
+}
+.contact-link:hover { padding-left: 0.5rem; }
+
+.contact-link-label {
+  font-size: 0.65rem; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--text-tertiary);
+}
+.contact-link-value {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+  color: var(--text-primary); transition: color 0.3s;
+}
+.contact-link:hover .contact-link-value { color: var(--color-gold); }
+
+.contact-footer-bar {
+  border-top: 1px solid var(--border-light); padding: 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-brand {
+  font-family: 'Playfair Display', serif; font-size: 1rem;
+  font-weight: 700; letter-spacing: 2px; color: var(--text-primary);
+}
+.footer-copy, .footer-note {
+  font-size: 0.65rem; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--text-tertiary);
+}
+
+@media (max-width: 600px) {
+  .contact-footer-bar { flex-direction: column; align-items: flex-start; }
 }
 </style>
 </head>
@@ -463,16 +667,22 @@ body {
 <!-- HERO -->
 <section id="home" class="hero-split">
   <div class="video-half">
-    <video src="./faiolhebra_2.mp4" autoplay loop muted playsinline></video>
+    <video autoplay loop muted playsinline>
+      <source src="https://faiolhe.github.io/docs/faiolhebra_2.mp4" type="video/mp4">
+      <source src="https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/faiolhebra_2.mp4" type="video/mp4">
+    </video>
   </div>
   <div class="video-half">
-    <video src="faiolhebra_hd.mp4" autoplay loop muted playsinline></video>
+    <video autoplay loop muted playsinline>
+      <source src="https://faiolhe.github.io/docs/faiolhebra_hd.mp4" type="video/mp4">
+      <source src="https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/faiolhebra_hd.mp4" type="video/mp4">
+    </video>
   </div>
   
   <div class="hero-content">
     <div class="hero-tag">Contemporary Digital Artist</div>
     <div class="hero-logo-kfsa">KFSA</div>
-    <div class="hero-sub">Obras Originais • Arte Digital • Coleções Exclusivas</div>
+    <div class="hero-sub">Obras Originais · Arte Digital · Coleções Exclusivas</div>
   </div>
 </section>
 
@@ -496,25 +706,57 @@ body {
   </div>
 </section>
 
-<!-- SOBRE O ARTISTA -->
+<!-- SOBRE O ARTISTA — REDESENHADO -->
 <section id="about" class="about-section">
-  <div class="about-video">
-    <!-- Substitua pelo vídeo do artista trabalhando -->
-    <video src="https://videos.pexels.com/video-files/5377684/5377684-hd_1920_1080_25fps.mp4" autoplay loop muted playsinline></video>
+
+  <!-- Coluna esquerda: foto -->
+  <div class="about-photo-wrap">
+    <div class="about-photo-frame">
+      <img
+        src="https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/Auth.png"
+        alt="Kayque Faiolhe da Silva Alves"
+      >
+    </div>
+    <div class="about-photo-label">
+      <span class="label-name">Kayque Faiolhe da Silva Alves</span>
+      <span class="label-role">Artista · Escritor · São João del-Rei, MG</span>
+    </div>
   </div>
+
+  <!-- Coluna direita: texto -->
   <div class="about-text">
-    <h2>A mente por trás do contraste.</h2>
-    <p>Kayque Faiolhe da Silva Alves explora as fronteiras entre o vazio e a forma. Sua arte digital nasce de uma obsessão pelo espaço negativo e pela emoção contida no silêncio.</p>
-    <p>Através de uma técnica que mescla geometria brutalista e sensibilidade orgânica, suas séries propõem uma pausa visual no caos contemporâneo.</p>
-    <div class="about-signature">Kayque Faiolhe</div>
+    <div class="about-eyebrow">O Artista</div>
+    <h2>Criar é responder.<br><em>Se incomoda, vira cor.</em></h2>
+
+    <div class="about-bio">
+      <p>Kayque Faiolhe da Silva Alves trabalha no chão do ateliê, entre violão, livros e tubos de tinta. Graduando em Física Bacharel pela UFSJ, participa do Centro Cultural Kilombo Urbano em São João del-Rei e dirige a SyraDevOps.</p>
+
+      <p>Não veio de galeria tradicional. Veio da urgência de transformar bagunça em linguagem. Acredita no processo mais do que no resultado — na tentativa mais do que no acerto. Se algo pesa, vira texto. Se não tem espaço, ele inventa o espaço.</p>
+
+      <p>Hoje divide o tempo entre a pintura, a escrita, a pesquisa em física e a gestão da SyraDevOps. É na <strong>kfsa.store</strong> que reúne tudo que produz. Ainda joga tinta no papel. E pretende continuar.</p>
+    </div>
+
+    <div class="about-quote">
+      "Se algo incomoda, vira cor.<br>Se pesa, vira texto.<br>Se não tem espaço, ele inventa o espaço."
+    </div>
+
+    <div class="about-tags">
+      <span class="about-tag">Pintura</span>
+      <span class="about-tag">Escrita</span>
+      <span class="about-tag">Arte Digital</span>
+      <span class="about-tag">Física — UFSJ</span>
+      <span class="about-tag">Kilombo Urbano</span>
+      <span class="about-tag">SyraDevOps</span>
+      <span class="about-tag">kfsa.store</span>
+    </div>
   </div>
+
 </section>
 
 <!-- GALERIA / ACERVO -->
 <section id="portfolio" class="container">
-  <h2 class="section-title">Acervo & Coleções</h2>
+  <h2 class="section-title">Acervo &amp; Coleções</h2>
   
-  <!-- FILTROS POR SÉRIES (Mais profissional que "quadros/desenhos") -->
   <div class="filter-section">
     <div class="filter-group" id="serie-filters">
       <button class="filter-btn active" onclick="setFilter('serie', 'todas', this)">Todas as Obras</button>
@@ -530,7 +772,39 @@ body {
   <div class="gallery" id="gallery"></div>
 </section>
 
-<!-- MODAL DE OBRA -->
+<!-- CONTATO -->
+<section id="contact">
+  <div class="contact-wrap">
+    <div class="contact-inner">
+      <div class="contact-eyebrow">Contato</div>
+      <h2 class="contact-title">Vamos conversar<br><em>sobre uma obra.</em></h2>
+      <p class="contact-sub">Para aquisições, encomendas ou parcerias, entre em contato diretamente.</p>
+
+      <div class="contact-links">
+        <a href="mailto:kayque@kfsa.store" class="contact-link">
+          <span class="contact-link-label">E-mail</span>
+          <span class="contact-link-value">kayque@kfsa.store</span>
+        </a>
+        <a href="https://kfsa.store" target="_blank" class="contact-link">
+          <span class="contact-link-label">Loja & Acervo</span>
+          <span class="contact-link-value">kfsa.store</span>
+        </a>
+        <a href="https://github.com/Faiolhe" target="_blank" class="contact-link">
+          <span class="contact-link-label">GitHub</span>
+          <span class="contact-link-value">@Faiolhe</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-footer-bar">
+      <span class="footer-brand">KFSA</span>
+      <span class="footer-copy">© 2025 Kayque Faiolhe da Silva Alves · Todos os direitos reservados</span>
+      <span class="footer-note">São João del-Rei · MG · Brasil</span>
+    </div>
+  </div>
+</section>
+
+
 <div class="modal-overlay" id="modalScene" onclick="closeModal(event)">
   <div class="modal-content" id="modalBody" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="closeModal(event)" aria-label="Fechar">✕</button>
@@ -541,6 +815,7 @@ body {
       <div class="m-tech" id="mTech"></div>
       <div class="m-desc" id="mDesc"></div>
       <div class="m-hist" id="mHist"></div>
+      <button class="m-expand-btn" id="mExpandBtn" onclick="toggleHist()">Ler mais ↓</button>
       
       <div class="m-grid">
         <div><div class="m-label">Ano</div><div class="m-value" id="mAno"></div></div>
@@ -558,23 +833,70 @@ body {
 </div>
 
 <script>
-// BASE DE DADOS ATUALIZADA (Focada em Séries e Numeração de Catálogo)
 const obras = [
   {
-    titulo: "Silent Geometry", serie: "Silences", catNum: "#01",
-    foto: "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?q=80&w=1200",
-    ano: "2024", tecnica: "Óleo sobre tela digital", dim: "90 × 120 cm",
-    status: "vendido", preco: "R$ 4.500", link: "#",
-    desc: "Formas geométricas dialogam com o silêncio.",
-    hist: "Criada durante um período de introspecção, nasceu da obsessão com o espaço negativo — o que não é pintado tem tanto peso quanto o que é."
+    titulo: "Singularidade Oculta", serie: "Silences", catNum: "#04",
+    foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/q3.jpg",
+    ano: "2025", tecnica: "Acrílica, pasta de modelagem e verniz sobre tela", dim: "—",
+    status: "venda", preco: "R$ 370", link: "#",
+    desc: "Um vórtice que atrai a luz pela própria matéria.",
+    hist: "O nome dialoga com a formação em Física do artista: a singularidade é o ponto central de um buraco negro onde a gravidade é infinita e nada — nem a luz — escapa. A obra funciona pelo contraste de acabamentos fosco e brilhante; o relevo circular cria sombras próprias que mudam conforme o ângulo de iluminação do ambiente. A assinatura dourada KFSA no canto superior direito é o único ponto de luz metálica contra a obscuridade total da peça."
   },
   {
-    titulo: "Urban Echo", serie: "Urban Feelings", catNum: "#04",
-    foto: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=1200",
-    ano: "2023", tecnica: "Acrílica digital sobre madeira", dim: "80 × 100 cm", 
-    status: "venda", preco: "R$ 3.200", link: "#",
-    desc: "O isolamento nas grandes cidades.",
-    hist: "Surgiu após três semanas andando pela cidade às 3h da manhã. O artista capturou o paradoxo de se sentir só em meio a milhões."
+    titulo: "Serpente Solar", serie: "Urban Feelings", catNum: "#01",
+    foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/q4.jpg",
+    ano: "2025", tecnica: "Acrílica e giz de cera sobre papel", dim: "—",
+    status: "venda", preco: "R$ 120", link: "#",
+    desc: "Arquétipo em movimento sobre fogo e luz.",
+    hist: "O fundo é construído com pinceladas rápidas de acrílica em amarelo e laranja, enquanto a silhueta da serpente é definida por linhas espessas e opacas de giz e pastel — tons de azul acinzentado e roxo, com o detalhe marcante do olho verde. Neoexpressionista, dialoga com o movimento CoBrA e a arte urbana contemporânea: a forma não busca o realismo acadêmico, mas a expressão direta de um arquétipo solar e primitivo."
+  },
+  {
+    titulo: "Gênese Terrestre", serie: "Silences", catNum: "#03",
+    foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/q1.webp",
+    ano: "2025", tecnica: "Acrílica sobre madeira", dim: "30 × 30 cm",
+    status: "venda", preco: "R$ 320", link: "#",
+    desc: "Forças da natureza em constante transformação.",
+    hist: "A composição apresenta uma mistura densa de tons terrosos, verdes vibrantes que remetem à vegetação e azuis que sugerem água ou atmosfera. A escolha do suporte de madeira contribui para a textura rústica visível nas bordas e no fundo, com pinceladas secas, raspados e áreas de maior opacidade — cada camada um momento distinto de criação."
+  },
+  {
+    titulo: "Sinapses Elétricas", serie: "Deconstruct", catNum: "#02",
+    foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/q2.webp",
+    ano: "2025", tecnica: "Acrílica sobre madeira (impasto)", dim: "30 × 30 cm",
+    status: "venda", preco: "R$ 220", link: "#",
+    desc: "Pulsão, luminosidade e conexão em movimento.",
+    hist: "O forte contraste entre o fundo escuro e as cores neon — amarelo, verde e rosa — evoca correntes elétricas e conexões neurais. A aplicação em impasto cria linhas espessas com relevo tridimensional sobre a superfície da madeira, cuja textura rústica ainda aparece sutilmente nas extremidades do suporte."
+  },
+  {
+    titulo: "Jardim Entrópico", serie: "Urban Feelings", catNum: "#02",
+    foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/q5.jpg",
+    ano: "2025", tecnica: "Acrílica e carimbo sobre papel", dim: "—",
+    status: "venda", preco: "R$ 80", link: "#",
+    desc: "Um ecossistema em colapso e florescimento simultâneo.",
+    hist: "Entropia, em Física, é o grau de desordem de um sistema — e aqui ela se manifesta como vegetação. A obra é construída em múltiplos planos: fundo verde gestual, ramificações pretas e marrons, pinceladas vibrantes em vermelho, azul e rosa no centro, finalizadas com anéis circulares estampados em laranja, vermelho e azul. A geometria do carimbo contamina o orgânico; a desordem natural absorve a forma repetida."
+  },
+  {
+    titulo: "Entropia Ígnea", serie: "Deconstruct", catNum: "#03",
+    foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/q8.jpg",
+    ano: "2025", tecnica: "Acrílica diluída sobre papel", dim: "—",
+    status: "venda", preco: "R$ 120", link: "#",
+    desc: "Labaredas e fumaça em rápida dispersão.",
+    hist: "Entropia e fogo em uma única composição: as pinceladas vermelhas e pretas criam um movimento caótico e ascendente a partir do centro. A diluição da tinta permitiu trabalhar com transparências no vermelho — variando do rosa-claro diluído ao vibrante —, enquanto o preto é aplicado de forma opaca e caligráfica, conduzindo o ritmo da dispersão."
+  },
+  {
+    titulo: "Crepúsculo Árido", serie: "Urban Feelings", catNum: "#03",
+    foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/q7.jpg",
+    ano: "2025", tecnica: "Acrílica sobre papel", dim: "—",
+    status: "venda", preco: "R$ 80", link: "#",
+    desc: "O fim de tarde em uma paisagem sem água.",
+    hist: "Uma árvore desprovida de folhas recorta em silhueta um céu de laranja e ocre. No fundo, nuvens cinzentas pintadas de forma solta, uma cadeia de montanhas escuras na linha do horizonte e um grande sol amarelo-limão posicionado na base direita. A composição clássica — figura em primeiro plano contra céu quente — evoca secura, fim de ciclo e a beleza quieta do árido."
+  },
+  {
+    titulo: "O Peso do Silêncio", serie: "Silences", catNum: "#05",
+    foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/q6.jpg",
+    ano: "2025", tecnica: "Acrílica sobre papel", dim: "—",
+    status: "venda", preco: "R$ 70", link: "#",
+    desc: "Conter o mundo. Conter a si mesmo.",
+    hist: "O gesto de cobrir o rosto com as mãos sugere tanto o isolamento do mundo exterior quanto a tentativa de silenciar um ruído interno. A figura é emoldurada por uma forma azul clara — um casulo ou aura — contra fundo azul escuro. Espirais e hachuras em preto flanqueiam o personagem; as mãos parecem se fundir ao rosto e ao pescoço. A obra dialoga diretamente com a série Silences: o silêncio aqui tem peso, forma e cor."
   },
   {
     titulo: "White Emotion", serie: "Silences", catNum: "#02",
@@ -659,7 +981,6 @@ function renderGallery(lista) {
   attachGlowEffect();
 }
 
-// Lógica para a Luz seguindo o mouse nos cards
 function attachGlowEffect() {
   document.querySelectorAll('.art-card').forEach(card => {
     card.onmousemove = e => {
@@ -700,6 +1021,15 @@ function openModal(index) {
 
   document.getElementById('modalScene').classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  // Mobile: reset & show expand button if text is long
+  const hist = document.getElementById('mHist');
+  const expandBtn = document.getElementById('mExpandBtn');
+  hist.classList.remove('expanded');
+  expandBtn.textContent = 'Ler mais ↓';
+  if (window.innerWidth <= 768) {
+    expandBtn.style.display = 'block';
+  }
 }
 
 function closeModal(e) {
@@ -708,9 +1038,15 @@ function closeModal(e) {
   document.body.style.overflow = 'auto';
 }
 
+function toggleHist() {
+  const hist = document.getElementById('mHist');
+  const btn = document.getElementById('mExpandBtn');
+  hist.classList.toggle('expanded');
+  btn.textContent = hist.classList.contains('expanded') ? 'Recolher ↑' : 'Ler mais ↓';
+}
+
 document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
 
-// Smooth scroll do menu
 document.querySelectorAll('.nav-links a').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     e.preventDefault();
@@ -722,7 +1058,6 @@ document.querySelectorAll('.nav-links a').forEach(anchor => {
   });
 });
 
-// Inicialização
 applyFilters();
 </script>
 </body>

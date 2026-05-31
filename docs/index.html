@@ -646,9 +646,60 @@ body {
   text-transform: uppercase; color: var(--text-tertiary);
 }
 
-@media (max-width: 600px) {
-  .contact-footer-bar { flex-direction: column; align-items: flex-start; }
+/* --- ABAS DE CATEGORIA --- */
+.category-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 4rem;
+  padding-top: 4rem;
 }
+
+.cat-tab {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 1.5rem 3rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  transition: border-color 0.3s, background 0.3s;
+  margin-bottom: -1px;
+}
+
+.cat-tab:hover { background: rgba(255,255,255,0.03); }
+
+.cat-tab.active { border-bottom-color: var(--text-primary); }
+
+.cat-tab-label {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: var(--text-tertiary);
+  transition: color 0.3s;
+}
+.cat-tab.active .cat-tab-label { color: var(--text-primary); }
+
+.cat-tab-sub {
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+@media (max-width: 600px) {
+  .cat-tab { padding: 1rem 1.2rem; }
+  .cat-tab-label { font-size: 1rem; }
+  .cat-tab-sub { display: none; }
+}
+
+/* Vestuário: cards com proporção quadrada */
+.gallery.vestuario .card-img-wrap { aspect-ratio: 1/1; }
+
+/* Livros: cards ligeiramente mais altos */
+.gallery.livros .card-img-wrap { aspect-ratio: 3/4; }
 </style>
 </head>
 <body>
@@ -755,17 +806,31 @@ body {
 
 <!-- GALERIA / ACERVO -->
 <section id="portfolio" class="container">
-  <h2 class="section-title">Acervo &amp; Coleções</h2>
-  
-  <div class="filter-section">
+
+  <!-- ABAS DE CATEGORIA -->
+  <div class="category-tabs">
+    <button class="cat-tab active" onclick="setCategory('obras', this)">
+      <span class="cat-tab-label">Obras</span>
+      <span class="cat-tab-sub">Pinturas & Desenhos</span>
+    </button>
+    <button class="cat-tab" onclick="setCategory('livros', this)">
+      <span class="cat-tab-label">Livros</span>
+      <span class="cat-tab-sub">Publicações</span>
+    </button>
+    <button class="cat-tab" onclick="setCategory('vestuario', this)">
+      <span class="cat-tab-label">Vestuário</span>
+      <span class="cat-tab-sub">Coleção KFSA</span>
+    </button>
+  </div>
+
+  <!-- FILTROS DE SÉRIE (só aparecem em Obras) -->
+  <div class="filter-section" id="serieFiltersWrap">
     <div class="filter-group" id="serie-filters">
-      <button class="filter-btn active" onclick="setFilter('serie', 'todas', this)">Todas as Obras</button>
+      <button class="filter-btn active" onclick="setFilter('serie', 'todas', this)">Todas</button>
       <button class="filter-btn" onclick="setFilter('serie', 'Silences', this)">Silences</button>
       <button class="filter-btn" onclick="setFilter('serie', 'Urban Feelings', this)">Urban Feelings</button>
       <button class="filter-btn" onclick="setFilter('serie', 'Deconstruct', this)">Deconstruct</button>
-      <button class="filter-btn" onclick="setFilter('serie', 'Editorial', this)">Editorial</button>
     </div>
-    
     <input type="text" class="search-bar" id="searchInp" placeholder="Pesquisar por título ou técnica..." oninput="applyFilters()">
   </div>
 
@@ -833,120 +898,151 @@ body {
 </div>
 
 <script>
-  const LINK_PAGAMENTO = "https://www.asaas.com/c/1nzgh84xiowkatuv";
+const LINK_PAGAMENTO = "https://www.asaas.com/c/1nzgh84xiowkatuv";
+
+/* ── OBRAS ── */
 const obras = [
-  {
-    titulo: "Singularidade Oculta", serie: "Silences", catNum: "#04",
+  { titulo: "Singularidade Oculta", serie: "Silences", catNum: "#04",
     foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/q3.jpg",
     ano: "2025", tecnica: "Acrílica, pasta de modelagem e verniz sobre tela", dim: "—",
     status: "venda", preco: "R$ 370", link: LINK_PAGAMENTO,
     desc: "Um vórtice que atrai a luz pela própria matéria.",
-    hist: "O nome dialoga com a formação em Física do artista: a singularidade é o ponto central de um buraco negro onde a gravidade é infinita e nada — nem a luz — escapa. A obra funciona pelo contraste de acabamentos fosco e brilhante; o relevo circular cria sombras próprias que mudam conforme o ângulo de iluminação do ambiente. A assinatura dourada KFSA no canto superior direito é o único ponto de luz metálica contra a obscuridade total da peça."
-  },
-  {
-    titulo: "Serpente Solar", serie: "Urban Feelings", catNum: "#01",
+    hist: "O nome dialoga com a formação em Física do artista: a singularidade é o ponto central de um buraco negro onde a gravidade é infinita e nada — nem a luz — escapa. A obra funciona pelo contraste de acabamentos fosco e brilhante; o relevo circular cria sombras próprias que mudam conforme o ângulo de iluminação do ambiente. A assinatura dourada KFSA no canto superior direito é o único ponto de luz metálica contra a obscuridade total da peça." },
+  { titulo: "Serpente Solar", serie: "Urban Feelings", catNum: "#01",
     foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/q4.jpg",
     ano: "2025", tecnica: "Acrílica e giz de cera sobre papel", dim: "—",
     status: "venda", preco: "R$ 120", link: LINK_PAGAMENTO,
     desc: "Arquétipo em movimento sobre fogo e luz.",
-    hist: "O fundo é construído com pinceladas rápidas de acrílica em amarelo e laranja, enquanto a silhueta da serpente é definida por linhas espessas e opacas de giz e pastel — tons de azul acinzentado e roxo, com o detalhe marcante do olho verde. Neoexpressionista, dialoga com o movimento CoBrA e a arte urbana contemporânea: a forma não busca o realismo acadêmico, mas a expressão direta de um arquétipo solar e primitivo."
-  },
-  {
-    titulo: "Gênese Terrestre", serie: "Silences", catNum: "#03",
+    hist: "O fundo é construído com pinceladas rápidas de acrílica em amarelo e laranja, enquanto a silhueta da serpente é definida por linhas espessas e opacas de giz e pastel — tons de azul acinzentado e roxo, com o detalhe marcante do olho verde. Neoexpressionista, dialoga com o movimento CoBrA e a arte urbana contemporânea: a forma não busca o realismo acadêmico, mas a expressão direta de um arquétipo solar e primitivo." },
+  { titulo: "Gênese Terrestre", serie: "Silences", catNum: "#03",
     foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/q1.webp",
     ano: "2025", tecnica: "Acrílica sobre madeira", dim: "30 × 30 cm",
     status: "venda", preco: "R$ 320", link: LINK_PAGAMENTO,
     desc: "Forças da natureza em constante transformação.",
-    hist: "A composição apresenta uma mistura densa de tons terrosos, verdes vibrantes que remetem à vegetação e azuis que sugerem água ou atmosfera. A escolha do suporte de madeira contribui para a textura rústica visível nas bordas e no fundo, com pinceladas secas, raspados e áreas de maior opacidade — cada camada um momento distinto de criação."
-  },
-  {
-    titulo: "Sinapses Elétricas", serie: "Deconstruct", catNum: "#02",
+    hist: "A composição apresenta uma mistura densa de tons terrosos, verdes vibrantes que remetem à vegetação e azuis que sugerem água ou atmosfera. A escolha do suporte de madeira contribui para a textura rústica visível nas bordas e no fundo, com pinceladas secas, raspados e áreas de maior opacidade — cada camada um momento distinto de criação." },
+  { titulo: "Sinapses Elétricas", serie: "Deconstruct", catNum: "#02",
     foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/q2.webp",
     ano: "2025", tecnica: "Acrílica sobre madeira (impasto)", dim: "30 × 30 cm",
     status: "venda", preco: "R$ 220", link: LINK_PAGAMENTO,
     desc: "Pulsão, luminosidade e conexão em movimento.",
-    hist: "O forte contraste entre o fundo escuro e as cores neon — amarelo, verde e rosa — evoca correntes elétricas e conexões neurais. A aplicação em impasto cria linhas espessas com relevo tridimensional sobre a superfície da madeira, cuja textura rústica ainda aparece sutilmente nas extremidades do suporte."
-  },
-  {
-    titulo: "Jardim Entrópico", serie: "Urban Feelings", catNum: "#02",
+    hist: "O forte contraste entre o fundo escuro e as cores neon — amarelo, verde e rosa — evoca correntes elétricas e conexões neurais. A aplicação em impasto cria linhas espessas com relevo tridimensional sobre a superfície da madeira, cuja textura rústica ainda aparece sutilmente nas extremidades do suporte." },
+  { titulo: "Jardim Entrópico", serie: "Urban Feelings", catNum: "#02",
     foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/q5.jpg",
     ano: "2025", tecnica: "Acrílica e carimbo sobre papel", dim: "—",
     status: "venda", preco: "R$ 80", link: LINK_PAGAMENTO,
     desc: "Um ecossistema em colapso e florescimento simultâneo.",
-    hist: "Entropia, em Física, é o grau de desordem de um sistema — e aqui ela se manifesta como vegetação. A obra é construída em múltiplos planos: fundo verde gestual, ramificações pretas e marrons, pinceladas vibrantes em vermelho, azul e rosa no centro, finalizadas com anéis circulares estampados em laranja, vermelho e azul. A geometria do carimbo contamina o orgânico; a desordem natural absorve a forma repetida."
-  },
-  {
-    titulo: "Entropia Ígnea", serie: "Deconstruct", catNum: "#03",
+    hist: "Entropia, em Física, é o grau de desordem de um sistema — e aqui ela se manifesta como vegetação. A obra é construída em múltiplos planos: fundo verde gestual, ramificações pretas e marrons, pinceladas vibrantes em vermelho, azul e rosa no centro, finalizadas com anéis circulares estampados em laranja, vermelho e azul. A geometria do carimbo contamina o orgânico; a desordem natural absorve a forma repetida." },
+  { titulo: "Entropia Ígnea", serie: "Deconstruct", catNum: "#03",
     foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/q8.jpg",
     ano: "2025", tecnica: "Acrílica diluída sobre papel", dim: "—",
     status: "venda", preco: "R$ 120", link: LINK_PAGAMENTO,
     desc: "Labaredas e fumaça em rápida dispersão.",
-    hist: "Entropia e fogo em uma única composição: as pinceladas vermelhas e pretas criam um movimento caótico e ascendente a partir do centro. A diluição da tinta permitiu trabalhar com transparências no vermelho — variando do rosa-claro diluído ao vibrante —, enquanto o preto é aplicado de forma opaca e caligráfica, conduzindo o ritmo da dispersão."
-  },
-  {
-    titulo: "Crepúsculo Árido", serie: "Urban Feelings", catNum: "#03",
+    hist: "Entropia e fogo em uma única composição: as pinceladas vermelhas e pretas criam um movimento caótico e ascendente a partir do centro. A diluição da tinta permitiu trabalhar com transparências no vermelho — variando do rosa-claro diluído ao vibrante —, enquanto o preto é aplicado de forma opaca e caligráfica, conduzindo o ritmo da dispersão." },
+  { titulo: "Crepúsculo Árido", serie: "Urban Feelings", catNum: "#03",
     foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/q7.jpg",
     ano: "2025", tecnica: "Acrílica sobre papel", dim: "—",
     status: "venda", preco: "R$ 80", link: LINK_PAGAMENTO,
     desc: "O fim de tarde em uma paisagem sem água.",
-    hist: "Uma árvore desprovida de folhas recorta em silhueta um céu de laranja e ocre. No fundo, nuvens cinzentas pintadas de forma solta, uma cadeia de montanhas escuras na linha do horizonte e um grande sol amarelo-limão posicionado na base direita. A composição clássica — figura em primeiro plano contra céu quente — evoca secura, fim de ciclo e a beleza quieta do árido."
-  },
-  {
-    titulo: "O Peso do Silêncio", serie: "Silences", catNum: "#05",
+    hist: "Uma árvore desprovida de folhas recorta em silhueta um céu de laranja e ocre. No fundo, nuvens cinzentas pintadas de forma solta, uma cadeia de montanhas escuras na linha do horizonte e um grande sol amarelo-limão posicionado na base direita. A composição clássica — figura em primeiro plano contra céu quente — evoca secura, fim de ciclo e a beleza quieta do árido." },
+  { titulo: "O Peso do Silêncio", serie: "Silences", catNum: "#05",
     foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/q6.jpg",
     ano: "2025", tecnica: "Acrílica sobre papel", dim: "—",
     status: "venda", preco: "R$ 70", link: LINK_PAGAMENTO,
     desc: "Conter o mundo. Conter a si mesmo.",
-    hist: "O gesto de cobrir o rosto com as mãos sugere tanto o isolamento do mundo exterior quanto a tentativa de silenciar um ruído interno. A figura é emoldurada por uma forma azul clara — um casulo ou aura — contra fundo azul escuro. Espirais e hachuras em preto flanqueiam o personagem; as mãos parecem se fundir ao rosto e ao pescoço. A obra dialoga diretamente com a série Silences: o silêncio aqui tem peso, forma e cor."
-  },
-  {
-    titulo: "Mosaico Improvável", serie: "Editorial", catNum: "Vol 1",
+    hist: "O gesto de cobrir o rosto com as mãos sugere tanto o isolamento do mundo exterior quanto a tentativa de silenciar um ruído interno. A figura é emoldurada por uma forma azul clara — um casulo ou aura — contra fundo azul escuro. Espirais e hachuras em preto flanqueiam o personagem; as mãos parecem se fundir ao rosto e ao pescoço. A obra dialoga diretamente com a série Silences: o silêncio aqui tem peso, forma e cor." }
+];
+
+/* ── LIVROS ── */
+const livros = [
+  { titulo: "Mosaico Improvável", serie: "Romance", catNum: "Vol 1",
     foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/Mosaico%20improv%C3%A1vel/1.png",
     ano: "2025", tecnica: "Romance · Capa dura · 256 páginas", dim: "—",
     status: "venda", preco: "R$ 86", link: LINK_PAGAMENTO,
     desc: "Uma família improvável. Um lar que precisa ser defendido.",
-    hist: "Joseph, empresário e professor universitário, adota impulsivamente três irmãos órfãos — Ster, Léo e Ana — para evitar que sejam separados pelo sistema de assistência social. Enquanto a singular família se adapta à convivência, André, antigo rival de negócios, inicia uma campanha de difamação usando a própria adoção para questionar as intenções de Joseph. A narrativa acompanha o amadurecimento dos personagens: da desconfiança à cooperação, da vulnerabilidade à proteção mútua."
-  }
+    hist: "Joseph, empresário e professor universitário, adota impulsivamente três irmãos órfãos — Ster, Léo e Ana — para evitar que sejam separados pelo sistema de assistência social. Enquanto a singular família se adapta à convivência, André, antigo rival de negócios, inicia uma campanha de difamação usando a própria adoção para questionar as intenções de Joseph. A narrativa acompanha o amadurecimento dos personagens: da desconfiança à cooperação, da vulnerabilidade à proteção mútua." }
 ];
 
-let state = { serie: 'todas', search: '' };
+/* ── VESTUÁRIO ── */
+const vestuario = [
+  { titulo: "Boné Branco", serie: "Vestuário", catNum: "KFSA",
+    foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/Vestuario/Bone_Branco.png",
+    ano: "2025", tecnica: "Acessório · Bordado KFSA", dim: "Tamanho único",
+    status: "venda", preco: "R$ 40", link: LINK_PAGAMENTO,
+    desc: "O essencial. Branco e limpo.",
+    hist: "Boné com bordado da marca KFSA. Tamanho único com regulagem traseira." },
+  { titulo: "Boné Preto", serie: "Vestuário", catNum: "KFSA",
+    foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/Vestuario/Bone_preto.png",
+    ano: "2025", tecnica: "Acessório · Bordado KFSA", dim: "Tamanho único",
+    status: "venda", preco: "R$ 40", link: LINK_PAGAMENTO,
+    desc: "O essencial. Preto e direto.",
+    hist: "Boné com bordado da marca KFSA. Tamanho único com regulagem traseira." },
+  { titulo: "Corta-Vento Preto", serie: "Vestuário", catNum: "KFSA",
+    foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/Vestuario/Corta_Vento.png",
+    ano: "2025", tecnica: "Jaqueta · Nylon leve", dim: "P · M · G · GG",
+    status: "venda", preco: "R$ 170", link: LINK_PAGAMENTO,
+    desc: "Leve, funcional, com identidade.",
+    hist: "Corta-vento em nylon leve com logo KFSA. Ideal para transição de clima." },
+  { titulo: "Moletom Branco", serie: "Vestuário", catNum: "KFSA",
+    foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/Vestuario/Moleton_Branco.png",
+    ano: "2025", tecnica: "Moletom · Algodão", dim: "P · M · G · GG",
+    status: "venda", preco: "R$ 120", link: LINK_PAGAMENTO,
+    desc: "Conforto com assinatura.",
+    hist: "Moletom em algodão com logo bordado KFSA. Branco clássico, corte amplo." },
+  { titulo: "Moletom Preto", serie: "Vestuário", catNum: "KFSA",
+    foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/Vestuario/Moleton_Preto.png",
+    ano: "2025", tecnica: "Moletom · Algodão", dim: "P · M · G · GG",
+    status: "venda", preco: "R$ 120", link: LINK_PAGAMENTO,
+    desc: "Conforto com assinatura.",
+    hist: "Moletom em algodão com logo bordado KFSA. Preto clássico, corte amplo." }
+];
+
+/* ── ESTADO ── */
+let state = { category: 'obras', serie: 'todas', search: '' };
+let currentList = [];
+
+function setCategory(cat, btn) {
+  state.category = cat;
+  state.serie = 'todas';
+  state.search = '';
+  document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const wrap = document.getElementById('serieFiltersWrap');
+  wrap.style.display = cat === 'obras' ? 'flex' : 'none';
+  document.querySelectorAll('#serie-filters .filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('#serie-filters .filter-btn').classList.add('active');
+  document.getElementById('searchInp').value = '';
+  document.getElementById('gallery').className = 'gallery ' + cat;
+  applyFilters();
+}
 
 function setFilter(type, value, btnElement) {
   state[type] = value;
-  const container = btnElement.parentElement;
-  container.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+  btnElement.parentElement.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btnElement.classList.add('active');
   applyFilters();
 }
 
 function applyFilters() {
-  state.search = document.getElementById('searchInp').value.toLowerCase().trim();
-  
-  const filtradas = obras.filter(o => {
-    const matchSerie = state.serie === 'todas' || o.serie === state.serie;
-    const matchSearch = !state.search || 
-                        o.titulo.toLowerCase().includes(state.search) || 
-                        o.tecnica.toLowerCase().includes(state.search);
+  state.search = (document.getElementById('searchInp').value || '').toLowerCase().trim();
+  let fonte = state.category === 'obras' ? obras : state.category === 'livros' ? livros : vestuario;
+  currentList = fonte.filter(o => {
+    const matchSerie = state.category !== 'obras' || state.serie === 'todas' || o.serie === state.serie;
+    const matchSearch = !state.search || o.titulo.toLowerCase().includes(state.search) || o.tecnica.toLowerCase().includes(state.search);
     return matchSerie && matchSearch;
   });
-
-  renderGallery(filtradas);
+  renderGallery(currentList);
 }
 
 function renderGallery(lista) {
   const g = document.getElementById('gallery');
-  
   if (!lista.length) {
-    g.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 4rem; font-family: Cormorant Garamond; font-size: 1.5rem; color:#777; font-style:italic;">Nenhuma obra encontrada. O silêncio também é arte.</div>';
+    g.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:4rem;font-family:Cormorant Garamond;font-size:1.5rem;color:#777;font-style:italic;">Nenhum item encontrado.</div>';
     return;
   }
-  
-  g.innerHTML = lista.map((o) => {
-    const objIndex = obras.indexOf(o);
+  g.innerHTML = lista.map((o, i) => {
     const isVenda = o.status === 'venda';
-    
     return `
-      <div class="art-card" onclick="openModal(${objIndex})">
+      <div class="art-card" onclick="openModal(${i})">
         <div class="card-img-wrap">
           <img src="${o.foto}" class="card-img" alt="${o.titulo}" loading="lazy">
         </div>
@@ -955,14 +1051,12 @@ function renderGallery(lista) {
           <h3 class="card-title">${o.titulo}</h3>
           <p class="card-tech">${o.tecnica}</p>
           <div class="card-footer">
-            <span class="status-dot ${o.status}" title="${isVenda ? 'Disponível' : 'Vendido'}"></span>
-            <span class="card-price">${isVenda ? o.preco : 'Coleção Privada'}</span>
+            <span class="status-dot ${o.status}" title="${isVenda ? 'Disponível' : 'Indisponível'}"></span>
+            <span class="card-price">${isVenda ? o.preco : 'Indisponível'}</span>
           </div>
         </div>
-      </div>
-    `;
+      </div>`;
   }).join('');
-
   attachGlowEffect();
 }
 
@@ -970,18 +1064,15 @@ function attachGlowEffect() {
   document.querySelectorAll('.art-card').forEach(card => {
     card.onmousemove = e => {
       const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
+      card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+      card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
     };
   });
 }
 
 function openModal(index) {
-  const o = obras[index];
+  const o = currentList[index];
   const isVenda = o.status === 'venda';
-  
   document.getElementById('mPhoto').src = o.foto;
   document.getElementById('mTitle').textContent = o.titulo;
   document.getElementById('mTech').textContent = `${o.ano} · ${o.tecnica}`;
@@ -990,31 +1081,25 @@ function openModal(index) {
   document.getElementById('mAno').textContent = o.ano;
   document.getElementById('mDim').textContent = o.dim;
   document.getElementById('mSerie').textContent = `${o.serie} ${o.catNum}`;
-  document.getElementById('mStatus').textContent = isVenda ? 'Disponível' : 'Coleção Privada';
+  document.getElementById('mStatus').textContent = isVenda ? 'Disponível' : 'Indisponível';
   document.getElementById('mPrice').textContent = isVenda ? o.preco : '-';
-  
   const btn = document.getElementById('mBuyBtn');
   if (isVenda) {
-    btn.textContent = "Adquirir Obra";
+    btn.textContent = "Adquirir";
     btn.href = LINK_PAGAMENTO;
     btn.classList.remove('disabled');
   } else {
-    btn.textContent = "Obra Indisponível";
+    btn.textContent = "Indisponível";
     btn.href = "javascript:void(0)";
     btn.classList.add('disabled');
   }
-
   document.getElementById('modalScene').classList.add('open');
   document.body.style.overflow = 'hidden';
-
-  // Mobile: reset & show expand button if text is long
   const hist = document.getElementById('mHist');
   const expandBtn = document.getElementById('mExpandBtn');
   hist.classList.remove('expanded');
   expandBtn.textContent = 'Ler mais ↓';
-  if (window.innerWidth <= 768) {
-    expandBtn.style.display = 'block';
-  }
+  if (window.innerWidth <= 768) expandBtn.style.display = 'block';
 }
 
 function closeModal(e) {
@@ -1030,19 +1115,18 @@ function toggleHist() {
   btn.textContent = hist.classList.contains('expanded') ? 'Recolher ↑' : 'Ler mais ↓';
 }
 
-document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 document.querySelectorAll('.nav-links a').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     e.preventDefault();
-    const targetId = this.getAttribute('href').substring(1);
-    const targetEl = document.getElementById(targetId);
-    if(targetEl) {
-      window.scrollTo({ top: targetEl.offsetTop - 80, behavior: 'smooth' });
-    }
+    const targetEl = document.getElementById(this.getAttribute('href').substring(1));
+    if (targetEl) window.scrollTo({ top: targetEl.offsetTop - 80, behavior: 'smooth' });
   });
 });
 
+// Init
+document.getElementById('gallery').className = 'gallery obras';
 applyFilters();
 </script>
 </body>

@@ -740,20 +740,20 @@ body {
 <!-- ESTATÍSTICAS -->
 <section class="artist-stats">
   <div class="stat-item">
-    <div class="stat-num">47</div>
-    <div class="stat-label">Obras de Arte</div>
+    <div class="stat-num">08</div>
+    <div class="stat-label">Pinturas & Desenhos</div>
   </div>
   <div class="stat-item">
     <div class="stat-num">05</div>
-    <div class="stat-label">Coleções</div>
+    <div class="stat-label">Livros Publicados</div>
   </div>
   <div class="stat-item">
     <div class="stat-num">03</div>
     <div class="stat-label">Anos de Produção</div>
   </div>
   <div class="stat-item">
-    <div class="stat-num">02</div>
-    <div class="stat-label">Livros Publicados</div>
+    <div class="stat-num">05</div>
+    <div class="stat-label">Peças de Vestuário</div>
   </div>
 </section>
 
@@ -765,7 +765,7 @@ body {
     <div class="about-photo-frame">
       <img
         src="https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/Auth.png"
-        alt="Kayque Faiolhe da Silva Alves"
+        alt="Kayque Faiolhe da Silva Alves — artista segurando uma de suas telas"
       >
     </div>
     <div class="about-photo-label">
@@ -846,6 +846,10 @@ body {
       <p class="contact-sub">Para aquisições, encomendas ou parcerias, entre em contato diretamente.</p>
 
       <div class="contact-links">
+        <a href="tel:+5532999530234" class="contact-link">
+          <span class="contact-link-label">Telefone</span>
+          <span class="contact-link-value">+55 (32) 9 9953-0234</span>
+        </a>
         <a href="mailto:kayque.faiolhe@outlook.com" class="contact-link">
           <span class="contact-link-label">E-mail</span>
           <span class="contact-link-value">kayque.faiolhe@outlook.com</span>
@@ -954,6 +958,24 @@ const obras = [
 
 /* ── LIVROS ── */
 const livros = [
+  { titulo: "O Pacote", serie: "Romance", catNum: "Prelúdio",
+    foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/Caps/4.png",
+    ano: "2025", tecnica: "Romance · Prelúdio da trilogia", dim: "—",
+    status: "venda", preco: "R$ 52", link: LINK_PAGAMENTO,
+    desc: "Antes da Casa de Vidro, havia o Solo de Ferro.",
+    hist: "Em O Pacote, mergulhamos na dolorosa e inspiradora origem dos irmãos Ster, Léo e Ana dentro do orfanato Caminho da Esperança. Sob a negligência de um sistema burocrático e frio, Ster (14) cria uma armadura de cinismo para proteger Léo — um garoto prodígio que traduz a realidade em códigos — e a pequena Ana, uma bebê cuja fragilidade desafia a dureza do cimento. Juntos, forjam uma unidade indestrutível de sobrevivência: um pacote que o mundo tenta separar, mas que eles juraram proteger a qualquer custo. O prelúdio definitivo que revela como a engenharia da dor construiu a fundação do Mosaico." },
+  { titulo: "Variável Incontrolável", serie: "Romance", catNum: "Vol 4",
+    foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/Caps/3.png",
+    ano: "2025", tecnica: "Romance · Trilogia", dim: "—",
+    status: "venda", preco: "R$ 76", link: LINK_PAGAMENTO,
+    desc: "Quando as paredes de aço e lógica começam a ceder.",
+    hist: "No capítulo mais definitivo da trilogia, a Casa de Vidro enfrenta seu abalo sísmico mais profundo. Enquanto Joseph e Isa tentam blindar a família contra traumas do passado, uma revelação inesperada ameaça desestabilizar as fundações milimetricamente calculadas de suas vidas. Forçada a lidar com uma mudança que desafia seu controle, Isa assume uma cadeira implacável na universidade, colidindo com Ster em um duelo de engenharia e sobrevivência. Quando as paredes cedem, o Mosaico precisará provar que sua força vem não da rigidez das regras, mas da coragem de abraçar o imprevisto." },
+  { titulo: "Onde a Vida Acontece", serie: "Romance", catNum: "Vol 3",
+    foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/Caps/2.png",
+    ano: "2025", tecnica: "Romance · 95 páginas", dim: "—",
+    status: "venda", preco: "R$ 65", link: LINK_PAGAMENTO,
+    desc: "A vida acontece nos intervalos invisíveis do cotidiano.",
+    hist: "Pelas ladeiras históricas de São João del-Rei, os caminhos de pessoas comuns — um calouro de administração enfrentando a penúria de uma república estudantil, uma dona de papelaria analógica, um músico de rua com a corda partida e a faxineira noturna da imponente torre da 8 Suits — cruzam-se de forma sutil e transformadora com a família de Joseph, Isa e Letícia. Um mosaico literário sensível e poético que convida a olhar para aquilo que costumamos chamar de 'nada', pois é exatamente ali que tudo acontece." },
   { titulo: "A Auditoria", serie: "Romance", catNum: "Vol 2",
     foto: "https://raw.githubusercontent.com/Faiolhe/Kfsa.github.io/main/docs/Caps/1.png",
     ano: "2025", tecnica: "Romance · 65 páginas", dim: "—",
